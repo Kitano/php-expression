@@ -16,25 +16,14 @@
  * limitations under the License.
  */
 
-namespace Pel\Expression;
+namespace Pel\Expression\Compiler\Func;
 
-final class Expression
+use Pel\Expression\Ast\FunctionExpression;
+use Pel\Expression\ExpressionCompiler;
+
+interface FunctionCompilerInterface
 {
-    /** READ-ONLY */
-    public $expression;
-
-    public function __construct($expression)
-    {
-        $this->expression = $expression;
-    }
-
-    public function getHashCode()
-    {
-        return sha1($this->expression);
-    }
-
-    public function __toString()
-    {
-        return 'EXPRESSION('.$this->expression.')';
-    }
+    public function getName();
+    public function compilePreconditions(ExpressionCompiler $compiler, FunctionExpression $function);
+    public function compile(ExpressionCompiler $compiler, FunctionExpression $function);
 }

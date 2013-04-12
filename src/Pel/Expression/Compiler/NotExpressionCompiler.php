@@ -16,25 +16,29 @@
  * limitations under the License.
  */
 
-namespace Pel\Expression;
+namespace Pel\Expression\Compiler;
 
-final class Expression
+use Pel\Expression\ExpressionCompiler;
+use Pel\Expression\Ast\ExpressionInterface;
+
+class NotExpressionCompiler implements TypeCompilerInterface
 {
-    /** READ-ONLY */
-    public $expression;
-
-    public function __construct($expression)
+    public function getType()
     {
-        $this->expression = $expression;
+        return 'Pel\Expression\Ast\NotExpression';
     }
 
-    public function getHashCode()
+    public function compilePreconditions(ExpressionCompiler $compiler, ExpressionInterface $expr)
     {
-        return sha1($this->expression);
+        $compiler->compilePreconditions($expr->expr);
     }
 
-    public function __toString()
+    public function compile(ExpressionCompiler $compiler, ExpressionInterface $expr)
     {
-        return 'EXPRESSION('.$this->expression.')';
+        $compiler
+            ->write('!(')
+            ->compileInternal($expr->expr)
+            ->write(')')
+        ;
     }
 }

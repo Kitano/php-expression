@@ -16,25 +16,17 @@
  * limitations under the License.
  */
 
-namespace Pel\Expression;
+namespace Pel\Expression\Compiler;
 
-final class Expression
+class AndExpressionCompiler extends BinaryExprCompiler
 {
-    /** READ-ONLY */
-    public $expression;
-
-    public function __construct($expression)
+    public function getType()
     {
-        $this->expression = $expression;
+        return 'Pel\Expression\Ast\AndExpression';
     }
 
-    public function getHashCode()
+    protected function getOperator()
     {
-        return sha1($this->expression);
-    }
-
-    public function __toString()
-    {
-        return 'EXPRESSION('.$this->expression.')';
+        return '&&';
     }
 }

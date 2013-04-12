@@ -16,25 +16,8 @@
  * limitations under the License.
  */
 
-namespace Pel\Expression;
+namespace Pel\Expression\Ast;
 
-final class Expression
+interface ExpressionInterface
 {
-    /** READ-ONLY */
-    public $expression;
-
-    public function __construct($expression)
-    {
-        $this->expression = $expression;
-    }
-
-    public function getHashCode()
-    {
-        return sha1($this->expression);
-    }
-
-    public function __toString()
-    {
-        return 'EXPRESSION('.$this->expression.')';
-    }
 }

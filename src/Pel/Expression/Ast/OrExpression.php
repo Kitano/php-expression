@@ -16,25 +16,16 @@
  * limitations under the License.
  */
 
-namespace Pel\Expression;
+namespace Pel\Expression\Ast;
 
-final class Expression
+class OrExpression implements ExpressionInterface
 {
-    /** READ-ONLY */
-    public $expression;
+    public $left;
+    public $right;
 
-    public function __construct($expression)
+    public function __construct(ExpressionInterface $left, ExpressionInterface $right)
     {
-        $this->expression = $expression;
-    }
-
-    public function getHashCode()
-    {
-        return sha1($this->expression);
-    }
-
-    public function __toString()
-    {
-        return 'EXPRESSION('.$this->expression.')';
+        $this->left = $left;
+        $this->right = $right;
     }
 }

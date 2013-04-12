@@ -16,25 +16,14 @@
  * limitations under the License.
  */
 
-namespace Pel\Expression;
+namespace Pel\Expression\Ast;
 
-final class Expression
+class ArrayExpression implements ExpressionInterface
 {
-    /** READ-ONLY */
-    public $expression;
+    public $elements;
 
-    public function __construct($expression)
+    public function __construct(array $elements)
     {
-        $this->expression = $expression;
-    }
-
-    public function getHashCode()
-    {
-        return sha1($this->expression);
-    }
-
-    public function __toString()
-    {
-        return 'EXPRESSION('.$this->expression.')';
+        $this->elements = $elements;
     }
 }

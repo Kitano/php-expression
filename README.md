@@ -1,8 +1,7 @@
-PHP Symfony Expression Language
-===============================
+PHP Expression Language
+=======================
 
-The purpose of this library is to provide a common base for an PHP Expression Language
-(more specifically or not for Symfony).
+The purpose of this library is to provide a common base for an PHP Expression Language.
 
 This is not really a creative library since it burrows almost all the code from the great
 [JMSSecurityExtraBundle](http://jmsyst.com/bundles/JMSSecurityExtraBundle "") which already defines

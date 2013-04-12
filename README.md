@@ -13,6 +13,6 @@ The idea is to take this code outside of the Johannes's bundle and to standardiz
 License
 -------
 
-This bundle is under the MIT license. See the complete license in the bundle:
+This bundle is under the MIT license. See the complete license in library:
 
     LICENSE

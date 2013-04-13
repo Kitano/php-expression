@@ -25,6 +25,9 @@ use Pel\Expression\ExpressionCompiler;
 
 class ParameterExpressionCompilerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ExpressionCompiler
+     */
     private $compiler;
 
     public function testCompile()
@@ -33,7 +36,7 @@ class ParameterExpressionCompilerTest extends \PHPUnit_Framework_TestCase
             '#foo == "bar"')));
 
         $object = new ParameterAccessTest;
-        $reflection = new \ReflectionMethod($object, 'secure');
+        $reflection = new \ReflectionMethod($object, 'usefulMethod');
         $invocation = new MethodInvocation($reflection, $object, array('bar'), array());
         $this->assertTrue($evaluator(array('object' => $invocation)));
 
@@ -52,6 +55,20 @@ class ParameterExpressionCompilerTest extends \PHPUnit_Framework_TestCase
         $evaluator(array('object' => new \stdClass));
     }
 
+    public function testCompileArrayWithParameters()
+    {
+        // TODO
+//        $evaluator = eval($source = $this->compiler->compileExpression(new Expression(
+//            '[#foo,"test"]')));
+//
+//        $object = new ParameterAccessTest;
+//        $reflection = new \ReflectionMethod($object, 'moreUsefulMethod');
+//        $invocation = new MethodInvocation($reflection, $object, array('foo_value'), array());
+//
+//        $expected = array('foo_value', 'test');
+//        $this->assertEquals($expected, $evaluator(array('object' => $invocation)));
+    }
+
     protected function setUp()
     {
         $this->compiler = new ExpressionCompiler();
@@ -61,7 +78,11 @@ class ParameterExpressionCompilerTest extends \PHPUnit_Framework_TestCase
 
 class ParameterAccessTest
 {
-    public function secure($foo)
+    public function usefulMethod($foo)
+    {
+    }
+
+    public function moreUsefulMethod($foo, $bar)
     {
     }
 }

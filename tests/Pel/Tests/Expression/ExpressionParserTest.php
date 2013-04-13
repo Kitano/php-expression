@@ -119,6 +119,15 @@ class ExpressionParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->parser->parse('#contact'));
     }
 
+    public function testArrayOfParameters()
+    {
+        $expected = new ArrayExpression(array(
+            new ParameterExpression('foo'),
+            new ParameterExpression('bar'),
+        ));
+        $this->assertEquals($expected, $this->parser->parse('[#foo,#bar]'));
+    }
+
     public function testIsEqual()
     {
         $expected = new IsEqualExpression(new MethodCallExpression(

@@ -35,6 +35,25 @@ class ExpressionParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->parser->parse('isEverythingRight() and isSimple()'));
     }
 
+    public function testOr()
+    {
+        $expected = new OrExpression(
+            new FunctionExpression('isEverythingRight', array()),
+            new FunctionExpression('isSimple', array())
+        );
+
+        $this->assertEquals($expected, $this->parser->parse('isEverythingRight() || isSimple()'));
+        $this->assertEquals($expected, $this->parser->parse('isEverythingRight() OR isSimple()'));
+    }
+
+    public function testNot()
+    {
+        $expected = new NotExpression(new FunctionExpression('isTrue', array()));
+
+        $this->assertEquals($expected, $this->parser->parse('!isTrue()'));
+        $this->assertEquals($expected, $this->parser->parse('not isTrue()'));
+    }
+
     public function testGetProperty()
     {
         $expected = new GetPropertyExpression(new VariableExpression('A'), 'foo');

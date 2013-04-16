@@ -3,6 +3,7 @@
 namespace Pel\Expression;
 
 use Pel\Expression\Ast\IsEqualExpression;
+use Pel\Expression\Ast\NotExpression;
 use Pel\Expression\Ast\ParameterExpression;
 use Pel\Expression\Ast\ConstantExpression;
 use Pel\Expression\Ast\GetItemExpression;

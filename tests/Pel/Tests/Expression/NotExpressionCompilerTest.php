@@ -39,6 +39,14 @@ class NotExpressionCompilerTest extends \PHPUnit_Framework_TestCase
             array('not "0"', true),
             // but "1" is true
             array('not "1"', false),
+            // the same expr with another notation
+            array('! "a string is always true"', false),
+            // (except if it is empty)
+            array('! ""', true),
+            // zero as string is evaluated to false
+            array('! "0"', true),
+            // but "1" is true
+            array('! "1"', false),
         );
     }
 

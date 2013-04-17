@@ -57,41 +57,17 @@ class ParameterExpressionCompilerTest extends \PHPUnit_Framework_TestCase
 
     public function testCompileArrayWithParameters()
     {
-        echo
-            PHP_EOL . '----------' . PHP_EOL .
-            $this->compiler->compileExpression(new Expression('#foo')) .
-            PHP_EOL . '----------' . PHP_EOL
-        ;
-
-        // TODO
-        $evaluator = eval($source = $this->compiler->compileExpression(new Expression(
-            '[#foo,"test"]')));
+        $evaluator = eval(
+            $source = $this->compiler->compileExpression(
+                new Expression('[#foo,"test"]')
+            )
+        );
 
         $object = new ParameterAccessTest;
         $reflection = new \ReflectionMethod($object, 'moreUsefulMethod');
         $invocation = new MethodInvocation($reflection, $object, array('foo_value'), array());
 
         $expected = array('foo_value', 'test');
-        $this->assertEquals($expected, $evaluator(array('object' => $invocation)));
-    }
-
-    public function testCompileArrayOfArrayWithParameters()
-    {
-        echo
-            PHP_EOL . '----------' . PHP_EOL .
-            $this->compiler->compileExpression(new Expression('[[#foo], "test"]')) .
-            PHP_EOL . '----------' . PHP_EOL
-        ;
-
-        // TODO
-        $evaluator = eval($source = $this->compiler->compileExpression(new Expression(
-            '[[#foo], "test"]')));
-
-        $object = new ParameterAccessTest;
-        $reflection = new \ReflectionMethod($object, 'moreUsefulMethod');
-        $invocation = new MethodInvocation($reflection, $object, array('foo_value'), array());
-
-        $expected = array(array('foo_value'), 'test');
         $this->assertEquals($expected, $evaluator(array('object' => $invocation)));
     }
 

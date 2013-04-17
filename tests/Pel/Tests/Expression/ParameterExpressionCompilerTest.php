@@ -71,6 +71,53 @@ class ParameterExpressionCompilerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $evaluator(array('object' => $invocation)));
     }
 
+    public function testCompileArrayWithMixedElements()
+    {
+        $evaluator = eval(
+            $source = $this->compiler->compileExpression(
+                new Expression('[#someObject.foo, #str, #int, #someArray.key]')
+            )
+        );
+
+        $object = new ParameterAccessTest();
+        $reflection = new \ReflectionMethod($object, 'complexMethod');
+
+        $someObject = new \stdClass();
+        $someObject->foo = 'bar';
+
+        $invocation = new MethodInvocation(
+            $reflection,
+            $object,
+            array(
+                $someObject,
+                'string',
+                1,
+                array(
+                    'anArrayElement',
+                    1 => 'foo',
+                    'bar',
+                    'key' => 'value',
+                )
+            ),
+            array()
+        );
+
+        $expected = array(
+            'bar',
+            'string',
+            1,
+            array(
+                'anArrayElement',
+                1 => 'foo',
+                'bar',
+                'key' => 'value',
+            )
+        );
+
+        $this->assertSame($expected, $evaluator(array('object' => $invocation)));
+
+    }
+
     protected function setUp()
     {
         $this->compiler = new ExpressionCompiler();
@@ -82,6 +129,11 @@ class ParameterAccessTest
 {
     public function usefulMethod($foo)
     {
+    }
+
+    public function complexMethod(\stdClass $someObject, $str, $int, array $someArray = array())
+    {
+
     }
 
     public function moreUsefulMethod($foo, $bar)

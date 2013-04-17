@@ -1,18 +1,13 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: bguery
- * Date: 17/04/13
- * Time: 20:37
- * To change this template use File | Settings | File Templates.
- */
 
 namespace Pel\Tests\Expression;
-
 
 use Pel\Expression\Expression;
 use Pel\Expression\ExpressionCompiler;
 
+/**
+ * @author Boris Guéry <guery.b@gmail.com>
+ */
 class NotExpressionCompilerTest extends \PHPUnit_Framework_TestCase
 {
     /**

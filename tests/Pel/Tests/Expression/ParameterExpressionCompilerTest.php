@@ -75,7 +75,7 @@ class ParameterExpressionCompilerTest extends \PHPUnit_Framework_TestCase
     {
         $evaluator = eval(
             $source = $this->compiler->compileExpression(
-                new Expression('[#someObject.foo, #str, #int, #someArray.key]')
+                new Expression('[#someObject.foo, #str, #int, #someArray]')
             )
         );
 

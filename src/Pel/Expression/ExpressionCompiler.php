@@ -238,6 +238,12 @@ class ExpressionCompiler
             return $this;
         }
 
+        if ($expr instanceof ArrayExpression) {
+            foreach ($expr->elements as $element) {
+                $this->compilePreconditions($element);
+            }
+        }
+
         return $this;
     }
 

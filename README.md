@@ -9,6 +9,22 @@ more or less such a base for a powerful EL (Expression Language).
 
 The idea is to take this code outside of the Johannes's bundle and to standardize it.
 
+Simple usage
+------------
+
+```php
+$compiler = new ExpressionCompiler();
+$evaluator = eval($compiler->compileExpression(new Expression("date.format(format)")));
+
+$context = array(
+    'date' => new \DateTime(),
+    'format' => 'Y',
+);
+$result = $evaluator($context);
+
+echo $result; // 2013
+```
+
 Adding a custom function compiler
 ---------------------------------
 

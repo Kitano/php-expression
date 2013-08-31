@@ -281,7 +281,9 @@ class ExpressionCompiler
 
         if ($expr instanceof GetItemExpression) {
             $this->compileInternal($expr->array);
-            $this->code .= '['.$expr->key.']';
+            $this->code .= '[';
+            $this->compileInternal($expr->key);
+            $this->code .= ']';
 
             return $this;
         }

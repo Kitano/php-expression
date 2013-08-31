@@ -18,7 +18,7 @@
 
 namespace Pel\Expression\Ast;
 
-class GetItemExpression
+class GetItemExpression implements ExpressionInterface
 {
     public $array;
     public $key;

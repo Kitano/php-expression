@@ -156,6 +156,15 @@ class ExpressionParserTest extends \PHPUnit_Framework_TestCase
         return $tests;
     }
 
+    public function testInteger()
+    {
+        $expected = new ConstantExpression(1);
+        $expression = $this->parser->parse('1');
+
+        $this->assertEquals($expected, $expression);
+        $this->assertSame($expected->value, $expression->value);
+    }
+
     protected function setUp()
     {
         $this->parser = new ExpressionParser();

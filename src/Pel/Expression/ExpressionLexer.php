@@ -37,6 +37,7 @@ final class ExpressionLexer extends \JMS\Parser\AbstractLexer
     const T_COLON = 15;
     const T_IS_EQUAL = 16;
     const T_NOT = 17;
+    const T_INTEGER = 18;
 
     protected function getRegex()
     {
@@ -104,6 +105,9 @@ final class ExpressionLexer extends \JMS\Parser\AbstractLexer
             $value = substr($value, 1);
         } elseif (ctype_alpha($value)) {
             $type = self::T_IDENTIFIER;
+        } elseif (ctype_digit($value)) {
+            $type = self::T_INTEGER;
+            $value = (int) $value;
         }
 
         return array($type, $value);

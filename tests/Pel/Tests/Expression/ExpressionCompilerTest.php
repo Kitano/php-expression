@@ -35,6 +35,17 @@ class ExpressionCompilerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $evaluator($context));
     }
 
+    public function testCompileConcatExpression()
+    {
+        $evaluator = eval($this->compiler->compileExpression(new Expression('"Hello " ~ name ~ "!"')));
+
+        $context = array(
+            'name' => 'Adrien',
+        );
+        $expected = 'Hello Adrien!';
+        $this->assertEquals($expected, $evaluator($context));
+    }
+
     public function testCompileArrayAccessExpressionString()
     {
         $evaluator = eval($this->compiler->compileExpression(new Expression('foos["foo"]')));

@@ -38,6 +38,7 @@ final class ExpressionLexer extends \JMS\Parser\AbstractLexer
     const T_IS_EQUAL = 16;
     const T_NOT = 17;
     const T_INTEGER = 18;
+    const T_CONCAT = 19;
 
     protected function getRegex()
     {
@@ -60,6 +61,7 @@ final class ExpressionLexer extends \JMS\Parser\AbstractLexer
                     |&&
                     |\|\|
                     |==
+                    |~
                 )
                 |\s+
                 |(.)
@@ -100,6 +102,8 @@ final class ExpressionLexer extends \JMS\Parser\AbstractLexer
             $type = self::T_OBJECT_OPERATOR;
         } elseif ('==' === $value) {
             $type = self::T_IS_EQUAL;
+        } elseif ('~' === $value) {
+            $type = self::T_CONCAT;
         } elseif ('#' === $value[0]) {
             $type = self::T_PARAMETER;
             $value = substr($value, 1);

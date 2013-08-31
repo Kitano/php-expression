@@ -24,6 +24,9 @@
         "phpunit/phpunit": "3.*",
         "jms/cg": "1.*"
     },
+    "config": {
+        "bin-dir": "bin"
+    },
     "autoload": {
         "psr-0": { "Pel": "src/" }
     }

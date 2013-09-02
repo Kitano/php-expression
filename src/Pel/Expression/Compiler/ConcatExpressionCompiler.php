@@ -16,16 +16,20 @@
  * limitations under the License.
  */
 
-namespace Pel\Expression\Ast;
+namespace Pel\Expression\Compiler;
 
-class GetItemExpression implements ExpressionInterface
+/**
+ * @author Adrien Brault <adrien.brault@gmail.com>
+ */
+class ConcatExpressionCompiler extends BinaryExprCompiler
 {
-    public $array;
-    public $key;
-
-    public function __construct(ExpressionInterface $array, ExpressionInterface $key)
+    public function getType()
     {
-        $this->array = $array;
-        $this->key = $key;
+        return 'Pel\Expression\Ast\ConcatExpression';
+    }
+
+    protected function getOperator()
+    {
+        return '.';
     }
 }

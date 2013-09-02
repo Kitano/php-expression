@@ -37,10 +37,36 @@ final class ExpressionLexer extends \JMS\Parser\AbstractLexer
     const T_COLON = 15;
     const T_IS_EQUAL = 16;
     const T_NOT = 17;
+    const T_INTEGER = 18;
+    const T_CONCAT = 19;
 
     protected function getRegex()
     {
-        return '/(#?[a-z][a-z0-9]*|\'(?:[^\']|(?<=\\\\)\')*\'|"(?:[^"]|(?<=\\\\)")*"|&&|\|\||==)|\s+|(.)/i';
+        return
+            '/
+                (
+                    \#?[a-z][a-z0-9]*
+                    |\'(?:
+                        [^\']
+                        |(?<=
+                            \\\\
+                        )\'
+                    )*\'
+                    |"(?:
+                        [^"]
+                        |(?<=
+                            \\\\
+                        )
+                    ")*"
+                    |&&
+                    |\|\|
+                    |==
+                    |~
+                )
+                |\s+
+                |(.)
+            /ix'
+        ;
     }
 
     protected function determineTypeAndValue($value)
@@ -76,11 +102,16 @@ final class ExpressionLexer extends \JMS\Parser\AbstractLexer
             $type = self::T_OBJECT_OPERATOR;
         } elseif ('==' === $value) {
             $type = self::T_IS_EQUAL;
+        } elseif ('~' === $value) {
+            $type = self::T_CONCAT;
         } elseif ('#' === $value[0]) {
             $type = self::T_PARAMETER;
             $value = substr($value, 1);
         } elseif (ctype_alpha($value)) {
             $type = self::T_IDENTIFIER;
+        } elseif (ctype_digit($value)) {
+            $type = self::T_INTEGER;
+            $value = (int) $value;
         }
 
         return array($type, $value);

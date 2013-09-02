@@ -56,6 +56,7 @@ class ExpressionCompiler
         $this->addTypeCompiler(new Compiler\OrExpressionCompiler());
         $this->addTypeCompiler(new Compiler\VariableExpressionCompiler());
         $this->addTypeCompiler(new Compiler\NotExpressionCompiler());
+        $this->addTypeCompiler(new Compiler\ConcatExpressionCompiler());
     }
 
     public function setAttribute($name, $value)
@@ -281,7 +282,9 @@ class ExpressionCompiler
 
         if ($expr instanceof GetItemExpression) {
             $this->compileInternal($expr->array);
-            $this->code .= '['.$expr->key.']';
+            $this->code .= '[';
+            $this->compileInternal($expr->key);
+            $this->code .= ']';
 
             return $this;
         }

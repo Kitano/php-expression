@@ -18,6 +18,7 @@
 
 namespace Pel\Expression;
 
+use Pel\Expression\Ast\ConcatExpression;
 use Pel\Expression\Ast\NotExpression;
 use Pel\Expression\Ast\IsEqualExpression;
 use Pel\Expression\Ast\ParameterExpression;
@@ -34,6 +35,7 @@ use Pel\Expression\Ast\FunctionExpression;
 
 final class ExpressionParser extends \JMS\Parser\AbstractParser
 {
+    const PRECEDENCE_CONCAT   = 5;
     const PRECEDENCE_OR       = 10;
     const PRECEDENCE_AND      = 15;
     const PRECEDENCE_IS_EQUAL = 20;
@@ -54,6 +56,15 @@ final class ExpressionParser extends \JMS\Parser\AbstractParser
         $expr = $this->Primary();
 
         while (true) {
+            if ($this->lexer->isNext(ExpressionLexer::T_CONCAT) && $precedence <= self::PRECEDENCE_CONCAT) {
+                $this->lexer->moveNext();
+
+                $expr = new ConcatExpression($expr, $this->Expression(
+                    self::PRECEDENCE_AND + 1
+                ));
+                continue;
+            }
+
             if ($this->lexer->isNext(ExpressionLexer::T_AND) && $precedence <= self::PRECEDENCE_AND) {
                 $this->lexer->moveNext();
 
@@ -103,6 +114,10 @@ final class ExpressionParser extends \JMS\Parser\AbstractParser
 
         if ($this->lexer->isNext(ExpressionLexer::T_STRING)) {
             return new ConstantExpression($this->match(ExpressionLexer::T_STRING));
+        }
+
+        if ($this->lexer->isNext(ExpressionLexer::T_INTEGER)) {
+            return new ConstantExpression($this->match(ExpressionLexer::T_INTEGER));
         }
 
         if ($this->lexer->isNext(ExpressionLexer::T_OPEN_BRACE)) {

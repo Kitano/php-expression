@@ -2,6 +2,7 @@
 
 namespace Pel\Expression;
 
+use Pel\Expression\Ast\ConcatExpression;
 use Pel\Expression\Ast\IsEqualExpression;
 use Pel\Expression\Ast\NotExpression;
 use Pel\Expression\Ast\ParameterExpression;
@@ -154,6 +155,26 @@ class ExpressionParserTest extends \PHPUnit_Framework_TestCase
         $tests[] = array($expected, 'A && (B || C)');
 
         return $tests;
+    }
+
+    public function testInteger()
+    {
+        $expected = new ConstantExpression(1);
+        $expression = $this->parser->parse('1');
+
+        $this->assertEquals($expected, $expression);
+        $this->assertSame($expected->value, $expression->value);
+    }
+
+    public function testConcat()
+    {
+        $expected = new ConcatExpression(
+            new ConstantExpression('hey'),
+            new ConstantExpression(' matelo!')
+        );
+        $expression = $this->parser->parse('"hey" ~ " matelo!"');
+
+        $this->assertEquals($expected, $expression);
     }
 
     protected function setUp()

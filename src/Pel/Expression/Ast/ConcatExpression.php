@@ -18,14 +18,17 @@
 
 namespace Pel\Expression\Ast;
 
-class GetItemExpression implements ExpressionInterface
+/**
+ * @author Adrien Brault <adrien.brault@gmail.com>
+ */
+class ConcatExpression implements ExpressionInterface
 {
-    public $array;
-    public $key;
+    public $left;
+    public $right;
 
-    public function __construct(ExpressionInterface $array, ExpressionInterface $key)
+    public function __construct(ExpressionInterface $left, ExpressionInterface $right)
     {
-        $this->array = $array;
-        $this->key = $key;
+        $this->left = $left;
+        $this->right = $right;
     }
 }
